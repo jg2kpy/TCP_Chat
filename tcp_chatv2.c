@@ -40,17 +40,18 @@ void setSocketAndAddress(){
     server_address.sin_family = AF_INET;
     server_address.sin_port = htons(port);
     Receptor.IP = "192.168.0.10";
-    inet_pton(AF_INET, Receptor.IP, &server_address.sin_addr);
+    inet_pton(protocolIP, Receptor.IP, &server_address.sin_addr);
 }
 
 void waitMode(){
-    int counter;
+    int counter = 0;
     int connection_status = -1;
     while (connection_status == -1){
-        int connection_status = connect(network_socket, (struct sockaddr *)&server_address, sizeof(server_address));
+        connection_status = connect(network_socket, (struct sockaddr *)&server_address, sizeof(server_address));
+        sleep(1000);
         counter++;
         if(counter==30){
-            printError("Cant connect after 30 trys");
+            printError("Cannot connect after 30 trys");
         }
     }
     //recieve data from the server
@@ -84,17 +85,15 @@ void startMode(){
 
 
 int main(int argc, char *argv[]){
-    if (argc != 3){
-        usage();
-    }
+    //if (argc != 3){
+    //    usage();
+    //}
     //searchContact();
     setSocketAndAddress();
     if (strcmp(argv[1], "-wait") == 0 || strcmp(argv[1], "-w") == 0){
         waitMode();
     }else if (strcmp(argv[1], "-start") == 0 || strcmp(argv[1], "-s") == 0){
         startMode();
-    }else{
-        usage();
     }
     return 0;
 }

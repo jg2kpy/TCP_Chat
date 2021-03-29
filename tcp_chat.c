@@ -12,7 +12,7 @@
 #define port 6969
 #define Protocol_IP AF_INET
 #define TCP SOCK_STREAM
-#define TCP SOCK_DGRAM
+#define UDP SOCK_DGRAM
 
 int main(int argc, char *argv[]){
     if (argc != 2){
