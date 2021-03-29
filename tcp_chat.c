@@ -1,26 +1,31 @@
+//Standart Library
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+//API to conection TCP
 #include <sys/types.h>
 #include <sys/socket.h>
-
 #include <netinet/in.h>
+
+//Defines
+#define port 6969
+#define Protocol_IP AF_INET
+#define TCP SOCK_STREAM
+#define TCP SOCK_DGRAM
 
 int main(int argc, char *argv[]){
     if (argc != 2){
-        perror("ERROR: Especifica el modo");
-        exit(EXIT_FAILURE);
+        perror("USE: ");
+        return 0;
     }
 
-    int network_socket = socket(AF_INET, SOCK_STREAM, 0); //SOCKET FOR TCP/IP
+    int network_socket = socket(Protocol_IP, TCP, 0); //SOCKET FOR TCP/IP
 
-    int port = 6969;
     struct sockaddr_in server_address;
     server_address.sin_family = AF_INET;
-    server_address.sin_port = htons(port);       //Specify the port
+    server_address.sin_port = htons(port);
     inet_pton(AF_INET, "192.168.0.10", &server_address.sin_addr);
-    //mi ip: "181.126.194.28"
 
     if (strcmp(argv[1], "-client") == 0){
 
@@ -53,7 +58,7 @@ int main(int argc, char *argv[]){
 
         int client_socket = accept(server_socket, NULL, NULL); //INVESTIGAR MAS ESTO
 
-        char server_message[256] = "Hello!!";
+        char server_message[256] = "HOLA";
         send(client_socket, server_message, sizeof(server_message), 0); //Enviar mensaje desde el server al cliente
 
         //close the socket
