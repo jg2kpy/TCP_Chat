@@ -12,7 +12,7 @@
 #define port 6969
 #define protocolIP AF_INET
 #define TCP SOCK_STREAM
-#define TCP SOCK_DGRAM
+#define UDP SOCK_DGRAM
 
 int network_socket = -1;
 struct sockaddr_in server_address;
@@ -39,6 +39,7 @@ void setSocketAndAddress(){
 
     server_address.sin_family = AF_INET;
     server_address.sin_port = htons(port);
+    Receptor.IP = "192.168.0.10";
     inet_pton(AF_INET, Receptor.IP, &server_address.sin_addr);
 }
 
@@ -86,7 +87,7 @@ int main(int argc, char *argv[]){
     if (argc != 3){
         usage();
     }
-    searchContact();
+    //searchContact();
     setSocketAndAddress();
     if (strcmp(argv[1], "-wait") == 0 || strcmp(argv[1], "-w") == 0){
         waitMode();
