@@ -1,4 +1,4 @@
-//Standart Library
+//Standart Library test from Windows
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
